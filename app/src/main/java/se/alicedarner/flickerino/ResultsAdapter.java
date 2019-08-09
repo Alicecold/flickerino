@@ -19,27 +19,6 @@ import se.alicedarner.flickerino.utils.ImageUtil;
 class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
     private static List<Photo> photos;
 
-    static class ViewHolder extends RecyclerView.ViewHolder  {
-        ImageView image;
-
-        ViewHolder(View v) {
-            super(v);
-            image = v.findViewById(R.id.resultItemImageView);
-            v.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), ViewPhotoActivity.class);
-                    intent.putExtra("photo_id", ResultsAdapter.photos.get(getAdapterPosition()).getId());
-                    intent.putExtra("photo_farm", ResultsAdapter.photos.get(getAdapterPosition()).getFarm());
-                    intent.putExtra("photo_server", ResultsAdapter.photos.get(getAdapterPosition()).getServer());
-                    intent.putExtra("photo_secret", ResultsAdapter.photos.get(getAdapterPosition()).getSecret());
-                    v.getContext().startActivity(intent);
-                }
-            });
-        }
-    }
-
     ResultsAdapter(List<Photo> photos) {
         ResultsAdapter.photos = photos;
     }
@@ -59,9 +38,29 @@ class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
                 .into(holder.image);
     }
 
-
     @Override
     public int getItemCount() {
         return photos.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder  {
+        ImageView image;
+
+        ViewHolder(View v) {
+            super(v);
+            image = v.findViewById(R.id.resultItemImageView);
+            v.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ViewPhotoActivity.class);
+                    intent.putExtra("photo_id", ResultsAdapter.photos.get(getAdapterPosition()).getId());
+                    intent.putExtra("photo_farm", ResultsAdapter.photos.get(getAdapterPosition()).getFarm());
+                    intent.putExtra("photo_server", ResultsAdapter.photos.get(getAdapterPosition()).getServer());
+                    intent.putExtra("photo_secret", ResultsAdapter.photos.get(getAdapterPosition()).getSecret());
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
     }
 }

@@ -29,6 +29,8 @@ import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -129,10 +132,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // I might still need these
         int id = item.getItemId();
-
         if (id == R.id.commons) {
+            MenuItem useCommonsCheckbox = navigationView.getMenu().findItem(R.id.commons);
+            CompoundButton checkView = (CompoundButton) useCommonsCheckbox.getActionView();
+            checkView.setChecked(!checkView.isChecked());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

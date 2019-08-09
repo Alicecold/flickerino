@@ -7,30 +7,55 @@
     tools:context=".ViewPhotoActivity">
 
     <ImageView
-        android:id="@+id/selectedPhotoImageView"
+        android:id="@+id/selected_photo_image_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/content_description_placeholder" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/selectedPhotoScrollView"
         android:layout_width="395dp"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectedPhotoImageView"
+        app:layout_constraintTop_toBottomOf="@+id/selected_photo_image_view"
         app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/titleTextView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_placeholder" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_placeholder"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/owner_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/taken_date_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

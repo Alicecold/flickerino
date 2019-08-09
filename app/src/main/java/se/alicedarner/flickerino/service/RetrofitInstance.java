@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
 import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 
-/* So this is a singleton, and I'm aware that's not very testable. */
+/* So this is a singleton, and I'm aware that it is not very testable. */
 
 public class RetrofitInstance {
     private static RetrofitInstance retrofit_instance = null;
@@ -52,11 +52,13 @@ public class RetrofitInstance {
     public Call<SearchResult> search(String query, String apiKey, boolean get_commons) {
         return service.search("flickr.photos.search", query, apiKey, "json", get_commons,1);
     }
+
+    /* For some reason, Flickr API acts like is_commons is true when explicitly set to false */
     public Call<SearchResult> search(String query, String apiKey) {
         return service.search("flickr.photos.search", query, apiKey, "json",1);
     }
 
-    public Call<Selectedimage> getImage(String id, String apiKey){
+    public Call<Selectedimage> getSelectedPhoto(String id, String apiKey){
         return service.getImage("flickr.photos.getInfo", id,  apiKey, "json", 1);
     }
 }

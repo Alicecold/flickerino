@@ -2,7 +2,7 @@
     <string name="app_name">Flickerino Search</string>
     <string name="search_hint">What beauty do you seek today?</string>
     <string name="search_button_label">Search</string>
-    <string name="title_placeholder">Title</string>
+    <string name="title_placeholder">Loading…</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
