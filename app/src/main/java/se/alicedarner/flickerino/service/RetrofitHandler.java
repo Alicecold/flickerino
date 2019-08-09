@@ -38,7 +38,10 @@ public class RetrofitHandler {
         service = retrofit.create(FlickrService.class);
     }
 
+    public Call<SearchResult> search(String query, String apiKey, boolean get_commons) {
+        return service.search("flickr.photos.search", query, apiKey, "json", get_commons,1);
+    }
     public Call<SearchResult> search(String query, String apiKey) {
-        return service.search("flickr.photos.search", query, apiKey, "json", 1);
+        return service.search("flickr.photos.search", query, apiKey, "json",1);
     }
 }
