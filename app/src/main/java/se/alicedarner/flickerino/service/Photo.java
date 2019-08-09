@@ -1,4 +1,4 @@
-package se.alicedarner.flickerino;
+package se.alicedarner.flickerino.service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,6 +25,10 @@ public class Photo {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 }

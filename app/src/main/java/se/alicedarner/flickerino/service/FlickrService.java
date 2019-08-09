@@ -1,4 +1,4 @@
-package se.alicedarner.flickerino;
+package se.alicedarner.flickerino.service;
 
 
 import retrofit2.Call;

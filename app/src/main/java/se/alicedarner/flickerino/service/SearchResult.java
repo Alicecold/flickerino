@@ -1,4 +1,4 @@
-package se.alicedarner.flickerino;
+package se.alicedarner.flickerino.service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,10 +11,6 @@ public class SearchResult {
 
     public Result getResult() {
         return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
     }
 
 }
