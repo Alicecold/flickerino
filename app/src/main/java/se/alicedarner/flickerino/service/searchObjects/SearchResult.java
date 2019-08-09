@@ -1,4 +1,4 @@
-package se.alicedarner.flickerino.service;
+package se.alicedarner.flickerino.service.searchObjects;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

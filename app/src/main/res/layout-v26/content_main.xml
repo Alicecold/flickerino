@@ -26,8 +26,7 @@
                 android:ems="10"
                 android:inputType="textNoSuggestions"
                 android:hint="@string/search_hint"
-                android:importantForAutofill="no"
-                tools:targetApi="o" />
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/searchButton"
