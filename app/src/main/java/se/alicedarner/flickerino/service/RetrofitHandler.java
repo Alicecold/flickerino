@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
 import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 
 public class RetrofitHandler {
@@ -43,5 +44,9 @@ public class RetrofitHandler {
     }
     public Call<SearchResult> search(String query, String apiKey) {
         return service.search("flickr.photos.search", query, apiKey, "json",1);
+    }
+
+    public Call<Selectedimage> getImage(String id, String apiKey){
+        return service.getImage("flickr.photos.getInfo", id,  apiKey, "json", 1);
     }
 }

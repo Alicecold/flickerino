@@ -28,6 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import se.alicedarner.flickerino.service.RetrofitHandler;
+import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
 import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 
 public class MainActivity extends AppCompatActivity
@@ -93,6 +94,26 @@ public class MainActivity extends AppCompatActivity
                             SearchResult searchResult = response.body();
                             ResultsAdapter adapter = new ResultsAdapter(searchResult.getResult().getPhotos());
                             recyclerView.setAdapter(adapter);
+
+                            Call<Selectedimage> photoCall = retrofit.getImage(
+                                    searchResult.getResult().getPhotos().get(0).getId(), getApplicationContext().getResources().getString(R.string.flickr_key)
+                            );
+
+                            photoCall.enqueue(new Callback<Selectedimage>() {
+                                @Override
+                                public void onResponse(Call<Selectedimage> call, Response<Selectedimage> response) {
+                                    Selectedimage selected = response.body();
+                                    String log = selected.getPhoto().getTitle().getContent();
+                                    Log.d("The title is: ", log);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Selectedimage> call, Throwable t) {
+
+                                }
+                            });
+
+
                         }
 
                         @Override
