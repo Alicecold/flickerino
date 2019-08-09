@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[14]" />
+        android:contentDescription="@string/content_description_placeholder" />
 
     <ScrollView
         android:id="@+id/selectedPhotoScrollView"
@@ -30,7 +30,7 @@
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/titlePlaceholder" />
+            android:text="@string/title_placeholder" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,8 +14,4 @@ public class Description {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
 }

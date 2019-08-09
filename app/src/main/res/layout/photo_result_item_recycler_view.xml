@@ -13,12 +13,7 @@
         android:layout_height="wrap_content"
         android:maxHeight="100dp"
         android:layout_weight="1"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <!-- TextView
-        android:id="@+id/photo_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"/ -->
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/content_description_placeholder" />
 
 </LinearLayout>

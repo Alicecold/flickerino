@@ -17,16 +17,8 @@ public class Selectedimage {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
-
     public String getStat() {
         return stat;
-    }
-
-    public void setStat(String stat) {
-        this.stat = stat;
     }
 
 }

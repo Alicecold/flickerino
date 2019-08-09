@@ -15,8 +15,4 @@ public class Notes {
         return note;
     }
 
-    public void setNote(List<Object> note) {
-        this.note = note;
-    }
-
 }

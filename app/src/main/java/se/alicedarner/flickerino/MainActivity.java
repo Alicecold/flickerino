@@ -1,42 +1,33 @@
 package se.alicedarner.flickerino;
 
 import android.os.Bundle;
-
 import android.util.Log;
-import android.view.View;
-
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
-import android.view.MenuItem;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import se.alicedarner.flickerino.service.RetrofitHandler;
-import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
+import se.alicedarner.flickerino.service.RetrofitInstance;
 import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private RecyclerView recyclerView;
-    private GridLayoutManager layoutManager;
-    private boolean use_commons = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,77 +44,66 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        MenuItem safeSearchCheckbox = navigationView.getMenu().findItem(R.id.commons);
-        CompoundButton checkView = (CompoundButton) safeSearchCheckbox.getActionView();
+        MenuItem useCommonsCheckbox = navigationView.getMenu().findItem(R.id.commons);
+        CompoundButton checkView = (CompoundButton) useCommonsCheckbox.getActionView();
         checkView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                use_commons = isChecked;
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SearchSettings.setUseCommons(isChecked);
             }
         });
-
-
-        //////
 
         Button searchButton = findViewById(R.id.searchButton);
         final TextView searchTextView = findViewById(R.id.searchTextView);
 
-        recyclerView = findViewById(R.id.resultRecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.resultRecyclerView);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
 
 
-        final RetrofitHandler retrofit = new RetrofitHandler();
+        final RetrofitInstance retrofit = RetrofitInstance.getInstance();
+        searchButton.setOnClickListener(onSearchButtonClickListerner(searchTextView, retrofit, recyclerView));
+    }
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener onSearchButtonClickListerner(final TextView searchTextView, final RetrofitInstance retrofit, final RecyclerView recyclerView) {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String query = searchTextView.getText().toString();
                 if (!query.trim().isEmpty()) {
                     Call<SearchResult> call;
 
-                    if (use_commons) {
-                        call = retrofit.search(query, getApplicationContext().getResources().getString(R.string.flickr_key), use_commons);
+                    /* For some reason, use_commons flag in the flickr API acts like true when explicitly set to false */
+                    if (SearchSettings.useCommons()) {
+                        call = retrofit.search(query, getApplicationContext().getResources().getString(R.string.flickr_key),
+                                SearchSettings.useCommons());
                     } else {
                         call = retrofit.search(query, getApplicationContext().getResources().getString(R.string.flickr_key));
                     }
 
-                    call.enqueue(new Callback<SearchResult>() {
-                        @Override
-                        public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
-                            SearchResult searchResult = response.body();
-                            ResultsAdapter adapter = new ResultsAdapter(searchResult.getResult().getPhotos());
-                            recyclerView.setAdapter(adapter);
-
-                            Call<Selectedimage> photoCall = retrofit.getImage(
-                                    searchResult.getResult().getPhotos().get(0).getId(), getApplicationContext().getResources().getString(R.string.flickr_key)
-                            );
-
-                            photoCall.enqueue(new Callback<Selectedimage>() {
-                                @Override
-                                public void onResponse(Call<Selectedimage> call, Response<Selectedimage> response) {
-                                    Selectedimage selected = response.body();
-                                    String log = selected.getPhoto().getTitle().getContent();
-                                    Log.d("The title is: ", log);
-                                }
-
-                                @Override
-                                public void onFailure(Call<Selectedimage> call, Throwable t) {
-
-                                }
-                            });
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<SearchResult> call, Throwable t) {
-                            Log.e("Oh no!", t.getMessage());
-                        }
-                    });
+                    call.enqueue(getUpdateUICallback(recyclerView));
                 }
             }
-        });
+        };
+    }
+
+    private Callback<SearchResult> getUpdateUICallback(final RecyclerView recyclerView) {
+        return new Callback<SearchResult>() {
+            @Override
+            public void onResponse(@NonNull Call<SearchResult> call, @NonNull Response<SearchResult> response) {
+                SearchResult searchResult = response.body();
+                if (searchResult != null) {
+                    ResultsAdapter adapter = new ResultsAdapter(searchResult.getResult().getPhotos());
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SearchResult> call, @NonNull Throwable t) {
+                Log.e("Oh no!", t.getMessage());
+            }
+        };
     }
 
     @Override
@@ -148,12 +128,11 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // I might still need these
         int id = item.getItemId();
 
         if (id == R.id.commons) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

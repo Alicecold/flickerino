@@ -17,16 +17,8 @@ public class Editability {
         return cancomment;
     }
 
-    public void setCancomment(Integer cancomment) {
-        this.cancomment = cancomment;
-    }
-
     public Integer getCanaddmeta() {
         return canaddmeta;
-    }
-
-    public void setCanaddmeta(Integer canaddmeta) {
-        this.canaddmeta = canaddmeta;
     }
 
 }

@@ -9,6 +9,5 @@ public class ImageUtil {
 
     public static String getHeroImageUrl(String farm, String server, String id, String secret) {
         return String.format("https://farm%s.staticflickr.com/%s/%s_%s_b.jpg", farm, server, id, secret);
-
     }
 }

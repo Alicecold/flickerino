@@ -12,15 +12,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
 import se.alicedarner.flickerino.service.searchObjects.SearchResult;
 
-public class RetrofitHandler {
+/* So this is a singleton, and I'm aware that's not very testable. */
+
+public class RetrofitInstance {
+    private static RetrofitInstance retrofit_instance = null;
     private FlickrService service;
-    private static OkHttpClient httpClient = new OkHttpClient();
+    private static OkHttpClient httpClient =  null;
 
     private void setHttpClient(HttpLoggingInterceptor interceptor) {
         httpClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
     }
 
-    public RetrofitHandler() {
+    private RetrofitInstance() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         setHttpClient(interceptor);
@@ -37,6 +40,13 @@ public class RetrofitHandler {
                 .build();
 
         service = retrofit.create(FlickrService.class);
+    }
+
+    public static RetrofitInstance getInstance(){
+        if(retrofit_instance == null){
+            retrofit_instance = new RetrofitInstance();
+        }
+        return retrofit_instance;
     }
 
     public Call<SearchResult> search(String query, String apiKey, boolean get_commons) {

@@ -17,16 +17,8 @@ public class Url {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
 }

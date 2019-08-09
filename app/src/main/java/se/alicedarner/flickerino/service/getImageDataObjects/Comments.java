@@ -14,8 +14,4 @@ public class Comments {
         return content;
     }
 
-    public void setContent(Integer content) {
-        this.content = content;
-    }
-
 }

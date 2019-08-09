@@ -14,8 +14,4 @@ public class People {
         return haspeople;
     }
 
-    public void setHaspeople(Integer haspeople) {
-        this.haspeople = haspeople;
-    }
-
 }

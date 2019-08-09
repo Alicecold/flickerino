@@ -1,15 +1,12 @@
 <resources>
-    <string name="app_name">Flickerino</string>
+    <string name="app_name">Flickerino Search</string>
     <string name="search_hint">What beauty do you seek today?</string>
-    <string name="searchButtonLabel">Search</string>
-    <string name="titlePlaceholder">Title</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="search_button_label">Search</string>
+    <string name="title_placeholder">Title</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="menu_use_commons">From Commons Project</string>
+    <string name="content_description_placeholder">Photo</string>
 </resources>

@@ -15,8 +15,4 @@ public class Urls {
         return url;
     }
 
-    public void setUrl(List<Url> url) {
-        this.url = url;
-    }
-
 }
