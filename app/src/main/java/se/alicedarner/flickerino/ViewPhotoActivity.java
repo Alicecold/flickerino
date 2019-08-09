@@ -9,19 +9,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import se.alicedarner.flickerino.service.searchObjects.Photo;
+import se.alicedarner.flickerino.utils.ImageUtil;
 
 public class ViewPhotoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_photo_activity);
+        setContentView(R.layout.view_selected_photo_activity);
 
         Intent intent = getIntent();
         String id = intent.getStringExtra("photo_id");
         String farm = intent.getStringExtra("photo_farm");
-        String owner = intent.getStringExtra("photo_owner");
         String server = intent.getStringExtra("photo_server");
         String secret = intent.getStringExtra("photo_secret");
 
@@ -30,11 +29,10 @@ public class ViewPhotoActivity extends AppCompatActivity {
 
         ImageView image = findViewById(R.id.selectedPhotoImageView);
 
-        Glide.with(image.getContext()).load(getHeroImageUrl(farm, server, id, secret)).into(image);
-    }
-
-    private String getHeroImageUrl(String farm, String server, String id, String secret) {
-        return String.format("https://farm%s.staticflickr.com/%s/%s_%s_b.jpg", farm, server, id, secret);
-
+        Glide.with(image.getContext())
+                .load(ImageUtil.getHeroImageUrl(farm, server, id, secret))
+                .override(1024, 800)
+                .centerCrop()
+                .into(image);
     }
 }
