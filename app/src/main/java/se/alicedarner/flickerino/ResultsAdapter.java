@@ -27,7 +27,7 @@ class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.photo_result_item_recycler_view, parent, false);
+                .inflate(R.layout.result_item_recycler_view, parent, false);
         return new ViewHolder(v);
     }
 
@@ -53,7 +53,7 @@ class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ViewHolder> {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), ViewPhotoActivity.class);
+                    Intent intent = new Intent(v.getContext(), SelectedPhotoActivity.class);
                     intent.putExtra("photo_id", ResultsAdapter.photos.get(getAdapterPosition()).getId());
                     intent.putExtra("photo_farm", ResultsAdapter.photos.get(getAdapterPosition()).getFarm());
                     intent.putExtra("photo_server", ResultsAdapter.photos.get(getAdapterPosition()).getServer());

@@ -18,12 +18,12 @@ import se.alicedarner.flickerino.service.getImageDataObjects.Selectedimage;
 import se.alicedarner.flickerino.ui.SelectedPhotoMetaData;
 import se.alicedarner.flickerino.utils.ImageUtil;
 
-public class ViewPhotoActivity extends AppCompatActivity {
+public class SelectedPhotoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_selected_photo_activity);
+        setContentView(R.layout.selected_photo_activity);
 
         RetrofitInstance retrofit = RetrofitInstance.getInstance();
 
@@ -45,7 +45,7 @@ public class ViewPhotoActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Selectedimage> call, @NonNull Response<Selectedimage> response) {
                 Selectedimage selected = response.body();
 
-                SelectedPhotoMetaData data = new SelectedPhotoMetaData(ViewPhotoActivity.this);
+                SelectedPhotoMetaData data = new SelectedPhotoMetaData(SelectedPhotoActivity.this);
                 if (selected != null) {
                     data.setStrings(selected.getPhoto().getTitle().getContent(),
                             selected.getPhoto().getOwner().getUsername(),
